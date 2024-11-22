@@ -14,9 +14,9 @@ class NotionService:
         """
         self.__base_url = settings.NOTION_BASE_URL
         self.__headers = {
-            "Authorization": f"Bearer {settings.NOTION_API_KEY}",
-            "Notion-Version": settings.NOTION_VERSION,
-            "Content-Type": "application/json",
+            'Authorization': f'Bearer {settings.NOTION_API_KEY}',
+            'Notion-Version': settings.NOTION_VERSION,
+            'Content-Type': 'application/json',
         }
         self.__http_client = AsyncHttpClient()
 
@@ -27,9 +27,25 @@ class NotionService:
         Returns:
             List[Dict[str, Any]]: A list of databases.
         """
-        url = f"{self.__base_url}/databases"
+        url = f'{self.__base_url}/search'
+        response = await self.__http_client.post(url, headers=self.__headers, request_body={
+            'filter': {
+                'value': 'database',
+                'property': 'object'
+            }
+        })
+        return response.json().get('results', [])
+
+    async def get_database(self, database_id: str) -> Dict[str, Any]:
+        """
+        Get Notion database by it's id.
+
+        Returns:
+            [Dict[str, Any]: A database object.
+        """
+        url = f'{self.__base_url}/databases/{database_id}'
         response = await self.__http_client.get(url, headers=self.__headers)
-        return response.json().get("results", [])
+        return response.json().get('results', [])
 
     async def list_tasks(self, database_id: str) -> List[Dict[str, Any]]:
         """
@@ -41,9 +57,14 @@ class NotionService:
         Returns:
             List[Dict[str, Any]]: A list of tasks (pages) in the database.
         """
-        url = f"{self.__base_url}/databases/{database_id}/query"
-        response = await self.__http_client.post(url, headers=self.__headers, request_body={})
-        return response.json().get("results", [])
+        url = f'{self.__base_url}/databases/{database_id}/query'
+        response = await self.__http_client.post(url, headers=self.__headers, request_body={
+            'filter': {
+                'value': 'page',
+                'property': 'object'
+            }
+        })
+        return response.json().get('results', [])
 
     async def create_task(self, database_id: str, properties: Dict[str, Any]) -> Dict[str, Any]:
         """
@@ -56,10 +77,10 @@ class NotionService:
         Returns:
             Dict[str, Any]: The created task object.
         """
-        url = f"{self.__base_url}/pages"
+        url = f'{self.__base_url}/pages'
         request_body = {
-            "parent": {"database_id": database_id},
-            "properties": properties,
+            'parent': {'database_id': database_id},
+            'properties': properties,
         }
         response = await self.__http_client.post(url, headers=self.__headers, request_body=request_body)
         return response.json()

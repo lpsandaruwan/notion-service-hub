@@ -34,7 +34,7 @@ class AsyncHttpClient:
             response.raise_for_status()
             return response
         except httpx.RequestError as e:
-            raise RuntimeError(f"An error occurred while making GET request to {url}: {e}")
+            raise RuntimeError(f'An error occurred while making GET request to {url}: {e}')
 
     async def post(self, url: str, headers: Dict[str, str], request_body: Dict[str, Any],
                    params: Optional[Dict[str, Any]] = None) -> httpx.Response:
@@ -47,7 +47,7 @@ class AsyncHttpClient:
             response.raise_for_status()
             return response
         except httpx.RequestError as e:
-            raise RuntimeError(f"An error occurred while making POST request to {url}: {e}")
+            raise RuntimeError(f'An error occurred while making POST request to {url}: {e}')
 
     async def put(self, url: str, headers: Dict[str, str], request_body: Dict[str, Any],
                   params: Optional[Dict[str, Any]] = None) -> httpx.Response:
@@ -60,7 +60,7 @@ class AsyncHttpClient:
             response.raise_for_status()
             return response
         except httpx.RequestError as e:
-            raise RuntimeError(f"An error occurred while making PUT request to {url}: {e}")
+            raise RuntimeError(f'An error occurred while making PUT request to {url}: {e}')
 
     async def close(self) -> None:
         """

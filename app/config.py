@@ -11,16 +11,18 @@ LOGGING_LEVELS = {
 class Settings(BaseSettings):
     NOTION_BASE_URL: str
     NOTION_API_KEY: str
-    NOTION_VERSION: str = "2022-06-28"
+    NOTION_VERSION: str = '2022-06-28'
+
+    APP_BASE_PATH: str
     APP_API_KEY: str
-    LOGGING_LEVEL: str = "info"
+    LOGGING_LEVEL: str
 
     @property
     def logging_level(self):
         return LOGGING_LEVELS.get(self.LOGGING_LEVEL.lower(), logging.INFO)
 
     class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+        env_file = '.env'
+        env_file_encoding = 'utf-8'
 
 settings = Settings()
