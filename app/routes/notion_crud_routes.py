@@ -53,10 +53,11 @@ async def list_pages():
             raise HTTPException(status_code=500, detail=str(e))
 
 
+#TODO: Add page attributes schema validation
 @notion_router.post('/databases/{database_id}/pages', response_model=Dict[str, Any])
 async def create_page(database_id: str, properties: Dict[str, Any]):
     """
-    Create a new page (page) in a specific Notion database.
+    Create a new page in a specific Notion database - Work in progress
 
     Args:
         database_id: The ID of the database.
