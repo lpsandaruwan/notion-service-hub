@@ -1,10 +1,10 @@
 import logging
 
 
-class Logger:
+class NotionServiceHubLogger:
 
     def __init__(self, log_level=logging.INFO):
-        self.logger = logging.getLogger('NotionServiceHub')
+        self.logger = logging.getLogger('NotionServiceHubLogger')
         if not self.logger.hasHandlers():  # Prevent duplicate handlers
             handler = logging.StreamHandler()
             formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')

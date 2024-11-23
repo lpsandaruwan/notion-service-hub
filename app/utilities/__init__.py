@@ -1,3 +1,3 @@
-from app.utilities.logger import Logger
+from app.utilities.logger import NotionServiceHubLogger
 
-LOG = Logger()
+LOG = NotionServiceHubLogger()
