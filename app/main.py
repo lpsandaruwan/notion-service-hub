@@ -1,9 +1,8 @@
 from fastapi import FastAPI
 
 from app.config import settings
+from app.middleware.auth_middleware import AuthMiddleware
 from app.routes.notion_crud_routes import notion_router
-from app.utilities.auth_middleware import AuthMiddleware
-
 
 app = FastAPI()
 

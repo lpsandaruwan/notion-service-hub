@@ -1,4 +1,5 @@
 from typing import Any, Dict, List
+
 from app.config import settings
 from app.utilities.async_http_client import AsyncHttpClient
 
@@ -38,26 +39,23 @@ class NotionService:
 
     async def get_database(self, database_id: str) -> Dict[str, Any]:
         """
-        Get Notion database by it's id.
+        Get Notion database by its id.
 
         Returns:
             [Dict[str, Any]: A database object.
         """
         url = f'{self.__base_url}/databases/{database_id}'
         response = await self.__http_client.get(url, headers=self.__headers)
-        return response.json().get('results', [])
+        return response.json()
 
-    async def list_tasks(self, database_id: str) -> List[Dict[str, Any]]:
+    async def list_pages(self) -> List[Dict[str, Any]]:
         """
-        List all tasks (pages) in a specific Notion database.
-
-        Args:
-            database_id (str): The ID of the Notion database.
+        List all pages in API key's scope.
 
         Returns:
-            List[Dict[str, Any]]: A list of tasks (pages) in the database.
+            List[Dict[str, Any]]: A list of pages in the database.
         """
-        url = f'{self.__base_url}/databases/{database_id}/query'
+        url = f'{self.__base_url}/search'
         response = await self.__http_client.post(url, headers=self.__headers, request_body={
             'filter': {
                 'value': 'page',
@@ -66,16 +64,16 @@ class NotionService:
         })
         return response.json().get('results', [])
 
-    async def create_task(self, database_id: str, properties: Dict[str, Any]) -> Dict[str, Any]:
+    async def create_page(self, database_id: str, properties: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Create a new task (page) in a Notion database.
+        Create a new page in a Notion database.
 
         Args:
             database_id (str): The ID of the Notion database.
-            properties (Dict[str, Any]): The properties of the new task.
+            properties (Dict[str, Any]): The properties of the new page.
 
         Returns:
-            Dict[str, Any]: The created task object.
+            Dict[str, Any]: The created page object.
         """
         url = f'{self.__base_url}/pages'
         request_body = {
