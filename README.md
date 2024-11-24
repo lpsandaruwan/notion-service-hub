@@ -24,7 +24,7 @@ APP_API_KEY=app_api_key
 LOGGING_LEVEL=debug
 ```
 
-Replace `notion_api_key` and `secure_api_key_for_notion_service_hub` with your actual Notion API key and API key for the service hub.
+Replace `notion_api_key` and `app_api_key` with your actual Notion API key and API key for the service hub.
 
 ## Running the Application
 
